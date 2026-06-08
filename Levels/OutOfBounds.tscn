@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bngabqv0l7eoo"]
+
+[ext_resource type="Script" path="res://Levels/OutOfBounds.gd" id="1_lneko"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qfwh4"]
+
+[node name="OutOfBounds" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+script = ExtResource("1_lneko")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("WorldBoundaryShape3D_qfwh4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
