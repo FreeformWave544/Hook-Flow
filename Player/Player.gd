@@ -5,6 +5,9 @@ class_name Player
 @export var jump_height := 1.2
 @export var fall_multiplier := 2.5
 
+@export_category("Hook")
+@export var hook_speed := 5.0
+
 @export_category("Camera")
 @export var mouse_sensitivity: float = 0.00075
 @export var bottom_clamp: float = -90.0
@@ -63,6 +66,11 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	UserInterface.update_player(self)
 
+var hook_pos := Vector3.ZERO
+var hook_len: float
+var swinging := false
+@export var reel_speed := 1.0
+@export var swing_acceleration := 5.0
 func _physics_process(delta: float) -> void:
 	frame_camera_rotation()
 	smooth_camera_zoom(delta)
@@ -76,15 +84,49 @@ func _physics_process(delta: float) -> void:
 		jump_audio.play()
 		run_audio.play()
 	
-	var direction = get_movement_direction()
-	if direction:
-		velocity.x = lerp(velocity.x, direction.x * base_speed, base_speed * delta)
-		velocity.z =  lerp(velocity.z, direction.z * base_speed, base_speed * delta)
-	else:
-		velocity.x = move_toward(velocity.x, 0, base_speed * delta * 5.0)
-		velocity.z = move_toward(velocity.z, 0, base_speed * delta * 5.0)
+	if Input.is_action_just_pressed("click"):
+		if $SmoothCamera/HookCast.is_colliding():
+			hook_pos = $SmoothCamera/HookCast.get_collision_point()
+			hook_len = global_position.distance_to(hook_pos)
+			swinging = true
 	
-	run_particles.emitting = not direction.is_zero_approx() and is_on_floor()
+	if Input.is_action_pressed("reel_in"): hook_len -= reel_speed * delta
+	if Input.is_action_pressed("reel_out"): hook_len += reel_speed * delta
+	if Input.is_action_just_pressed("release"): swinging = false ; hook_pos = Vector3.ZERO
+
+	if swinging:
+		$Hook/MeshInstance3D.look_at(hook_pos)
+		var offset = global_position - hook_pos
+		var dist = offset.length()
+		if dist > hook_len:
+			offset = offset.normalized() * hook_len
+			global_position = hook_pos + offset
+			var rope_dir = offset.normalized()
+			var radial_vel = velocity.dot(rope_dir)
+			if radial_vel > 0: velocity -= rope_dir * radial_vel
+			var forward = -transform.basis.z
+			var tangent = (forward - rope_dir * forward.dot(rope_dir)).normalized()
+			if Input.is_action_pressed("move_forward"): velocity += tangent * swing_acceleration * delta
+	
+	#if Input.is_action_pressed("click"):
+		#if $SmoothCamera/HookCast.is_colliding() and hook_pos == Vector3.ZERO: hook_pos = $SmoothCamera/HookCast.get_collision_point()
+		#if hook_pos == Vector3.ZERO: return
+		#gravity = 0.0
+		#global_position = global_position.move_toward(hook_pos, get_process_delta_time() * hook_speed)
+	#else:
+		#hook_pos = Vector3.ZERO
+		#gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+	
+	if !swinging:
+		var direction = get_movement_direction()
+		if direction:
+			velocity.x = lerp(velocity.x, direction.x * base_speed, base_speed * delta)
+			velocity.z =  lerp(velocity.z, direction.z * base_speed, base_speed * delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0, base_speed * delta * 5.0)
+			velocity.z = move_toward(velocity.z, 0, base_speed * delta * 5.0)
+	
+		run_particles.emitting = not direction.is_zero_approx() and is_on_floor()
 		
 	update_animation_tree()
 	move_and_slide()
@@ -135,5 +177,4 @@ func smooth_camera_zoom(delta: float) -> void:
 	)
 
 func _on_footstep_timer_timeout() -> void:
-	if is_on_floor() and get_movement_direction():
-		run_audio.play()
+	if is_on_floor() and get_movement_direction(): run_audio.play()
