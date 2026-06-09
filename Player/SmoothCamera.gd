@@ -4,7 +4,7 @@ extends Camera3D
 @export var target: Node3D
 ## Control the speed the SmoothCamera aligns with the target.
 @export var speed: float = 30.0
-	
+
 func _process(delta: float) -> void:
 	global_transform = global_transform.interpolate_with(
 		target.global_transform, 

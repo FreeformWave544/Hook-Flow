@@ -346,6 +346,7 @@ material_override = SubResource("StandardMaterial3D_ddoul")
 mesh = SubResource("PrismMesh_ddoul")
 
 [node name="HookIndicator" type="Node3D" parent="." unique_id=213266400]
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HookIndicator" unique_id=1315283944]
 mesh = SubResource("SphereMesh_6ysni")

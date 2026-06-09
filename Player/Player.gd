@@ -79,19 +79,21 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		if velocity.y >= 0 and Input.is_action_pressed("ui_accept"): velocity.y -= gravity * delta
 		else: velocity.y -= gravity * delta * fall_multiplier
-		
+
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = sqrt(jump_height * 2.0 * gravity)
 		jump_particles.restart()
 		jump_audio.play()
 		run_audio.play()
-	
-	if Input.is_action_just_pressed("click"):
-		if $SmoothCamera/HookCast.is_colliding():
+
+	if $SmoothCamera/HookCast.is_colliding():
+		if Input.is_action_just_pressed("click"):
 			hook_pos = $SmoothCamera/HookCast.get_collision_point()
 			hook_len = global_position.distance_to(hook_pos)
 			swinging = true
-	
+		UserInterface.hide_can_hook(false)
+	else: UserInterface.hide_can_hook(true)
+
 	if Input.is_action_pressed("reel_in"): hook_len -= reel_speed * delta
 	if Input.is_action_pressed("reel_out"): hook_len += reel_speed * delta
 	if Input.is_action_just_pressed("release"): swinging = false ; hook_pos = Vector3.ZERO

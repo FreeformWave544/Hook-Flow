@@ -51,10 +51,12 @@ func _on_settings_container_exit() -> void:
 	settings_container.visible = false
 	resume_button.grab_focus()
 	
-func hide_reticle(is_hidden:bool) -> void:
+func hide_reticle(is_hidden: bool) -> void:
 	# Hide the aiming reticle. Useful for the third person camera.
 	reticle.visible = not is_hidden
 
+func hide_can_hook(is_hidden: bool = !$HUD/CenterContainer/CanHook.visible) -> void:
+	$HUD/CenterContainer/CanHook.visible = not is_hidden
 
 # Take an existing tween and add steps to fade the screen in.
 func fade_in(tween_in: Tween):

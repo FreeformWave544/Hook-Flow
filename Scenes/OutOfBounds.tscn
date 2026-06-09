@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bngabqv0l7eoo"]
 
-[ext_resource type="Script" uid="uid://c7y2yyrbdkpft" path="res://Levels/OutOfBounds.gd" id="1_lneko"]
+[ext_resource type="Script" uid="uid://c7y2yyrbdkpft" path="res://Scenes/OutOfBounds.gd" id="1_lneko"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qfwh4"]
 

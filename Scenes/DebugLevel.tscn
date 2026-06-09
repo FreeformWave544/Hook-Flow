@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://vwr8ajoufse8" path="res://Player/Player.tscn" id="1_05f31"]
 [ext_resource type="Texture2D" uid="uid://clier55j2oocr" path="res://GDTVAssetPack/Textures/prototype-texture-with-size.png" id="1_crka7"]
 [ext_resource type="Texture2D" uid="uid://de2bsd506fj" path="res://GDTVAssetPack/Textures/prototype-texture.png" id="6_hoyj2"]
-[ext_resource type="PackedScene" uid="uid://by545d6tu0ty4" path="res://Levels/Portal.tscn" id="19_rhstb"]
+[ext_resource type="PackedScene" uid="uid://by545d6tu0ty4" path="res://Scenes/Portal.tscn" id="19_rhstb"]
 [ext_resource type="FontFile" uid="uid://ij353qf6fdpf" path="res://UserInterface/Font/Staatliches-Regular.ttf" id="20_vxu5d"]
-[ext_resource type="PackedScene" uid="uid://bngabqv0l7eoo" path="res://Levels/OutOfBounds.tscn" id="21_lvwi7"]
+[ext_resource type="PackedScene" uid="uid://bngabqv0l7eoo" path="res://Scenes/OutOfBounds.tscn" id="21_lvwi7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kxteu"]
 sky_top_color = Color(0.376471, 0.552941, 0.815686, 1)

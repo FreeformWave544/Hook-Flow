@@ -1,10 +1,19 @@
-[gd_scene load_steps=14 format=3 uid="uid://b4mrqfvtlycnc"]
+[gd_scene format=3 uid="uid://b4mrqfvtlycnc"]
 
-[ext_resource type="Script" path="res://UserInterface/UserInterface.gd" id="1_pjpe8"]
+[ext_resource type="Script" uid="uid://c0alv71ja1vhi" path="res://UserInterface/UserInterface.gd" id="1_pjpe8"]
 [ext_resource type="Theme" uid="uid://bq6qbvmwxf5gm" path="res://UserInterface/UITheme.tres" id="2_rwlv8"]
-[ext_resource type="Script" path="res://UserInterface/Reticle.gd" id="3_hfmys"]
+[ext_resource type="Script" uid="uid://dpvff6juc6p5v" path="res://UserInterface/Reticle.gd" id="3_hfmys"]
 [ext_resource type="Shader" uid="uid://wn6mnfchf1w7" path="res://UserInterface/ScreenSpaceBlur.tres" id="4_kynqp"]
 [ext_resource type="PackedScene" uid="uid://sbl4rscivr8g" path="res://UserInterface/SettingsContainer.tscn" id="5_qrem4"]
+
+[sub_resource type="Gradient" id="Gradient_0joph"]
+offsets = PackedFloat32Array(0.10240964, 0.24096386, 0.36746988)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0.14117648, 0, 0.6862745, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_co5mk"]
+gradient = SubResource("Gradient_0joph")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="GDScript" id="GDScript_ivi4s"]
 script/source = "extends MarginContainer
@@ -47,10 +56,10 @@ pressed = true
 [sub_resource type="Shortcut" id="Shortcut_rg3uj"]
 events = [SubResource("InputEventAction_gbevd")]
 
-[node name="UserInterface" type="CanvasLayer"]
+[node name="UserInterface" type="CanvasLayer" unique_id=416995972]
 script = ExtResource("1_pjpe8")
 
-[node name="HUD" type="Control" parent="."]
+[node name="HUD" type="Control" parent="." unique_id=88388826]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,7 +69,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("2_rwlv8")
 
-[node name="CenterContainer" type="CenterContainer" parent="HUD"]
+[node name="CenterContainer" type="CenterContainer" parent="HUD" unique_id=185526854]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,14 +78,18 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Reticle" type="TextureRect" parent="HUD/CenterContainer"]
+[node name="Reticle" type="TextureRect" parent="HUD/CenterContainer" unique_id=351003947]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 stretch_mode = 5
 script = ExtResource("3_hfmys")
 
-[node name="Hints" type="MarginContainer" parent="HUD"]
+[node name="CanHook" type="Sprite2D" parent="HUD/CenterContainer" unique_id=2047242000]
+position = Vector2(576, 324)
+texture = SubResource("GradientTexture2D_co5mk")
+
+[node name="Hints" type="MarginContainer" parent="HUD" unique_id=808721213]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,26 +102,26 @@ theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 script = SubResource("GDScript_ivi4s")
 
-[node name="PanelContainer" type="PanelContainer" parent="HUD/Hints"]
+[node name="PanelContainer" type="PanelContainer" parent="HUD/Hints" unique_id=1656654685]
 custom_minimum_size = Vector2(288, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_t4yve")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Hints/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Hints/PanelContainer" unique_id=1527684124]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Hints/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Hints/PanelContainer/VBoxContainer" unique_id=1259431187]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="HUD/Hints/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="TitleLabel" type="Label" parent="HUD/Hints/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1983588368]
 layout_mode = 2
 text = "Controls"
 label_settings = SubResource("LabelSettings_8msa4")
 
-[node name="CloseLabel" type="Label" parent="HUD/Hints/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="CloseLabel" type="Label" parent="HUD/Hints/PanelContainer/VBoxContainer/HBoxContainer" unique_id=538192571]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -116,10 +129,10 @@ text = "f close"
 label_settings = SubResource("LabelSettings_1tj06")
 horizontal_alignment = 2
 
-[node name="HSeparator" type="HSeparator" parent="HUD/Hints/PanelContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="HUD/Hints/PanelContainer/VBoxContainer" unique_id=791815835]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HUD/Hints/PanelContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="HUD/Hints/PanelContainer/VBoxContainer" unique_id=777331232]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.803922, 0.803922, 0.803922, 1)
 bbcode_enabled = true
@@ -131,7 +144,7 @@ text = "[color=bd2424]WASD[/color][color=746c61]:[/color] move
 [color=9052a1]esc[/color][color=746c61]:[/color] pause"
 fit_content = true
 
-[node name="PauseScreen" type="Control" parent="."]
+[node name="PauseScreen" type="Control" parent="." unique_id=355904021]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -142,7 +155,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_rwlv8")
 
-[node name="BackgroundBlur" type="TextureRect" parent="PauseScreen"]
+[node name="BackgroundBlur" type="TextureRect" parent="PauseScreen" unique_id=1258312454]
 material = SubResource("ShaderMaterial_6vwxw")
 layout_mode = 1
 anchors_preset = 15
@@ -152,7 +165,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_dk3bb")
 
-[node name="PauseContainer" type="CenterContainer" parent="PauseScreen"]
+[node name="PauseContainer" type="CenterContainer" parent="PauseScreen" unique_id=444107330]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -161,17 +174,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseScreen/PauseContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseScreen/PauseContainer" unique_id=1096608171]
 custom_minimum_size = Vector2(512, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PauseScreen/PauseContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="PauseScreen/PauseContainer/VBoxContainer" unique_id=866550273]
 layout_mode = 2
 theme_override_font_sizes/font_size = 128
 text = "Pause"
 horizontal_alignment = 1
 
-[node name="ResumeButton" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer" node_paths=PackedStringArray("shortcut_context")]
+[node name="ResumeButton" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer" unique_id=1078629098 node_paths=PackedStringArray("shortcut_context")]
 unique_name_in_owner = true
 layout_mode = 2
 shortcut_context = NodePath("../..")
@@ -179,19 +192,19 @@ shortcut = SubResource("Shortcut_rg3uj")
 shortcut_in_tooltip = false
 text = "resume"
 
-[node name="SettingsButton" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer" unique_id=307593997]
 layout_mode = 2
 text = "Settings"
 
-[node name="QuitButton" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="PauseScreen/PauseContainer/VBoxContainer" unique_id=1815932434]
 layout_mode = 2
 text = "Quit Game"
 
-[node name="SettingsContainer" parent="PauseScreen" instance=ExtResource("5_qrem4")]
+[node name="SettingsContainer" parent="PauseScreen" unique_id=1222264926 instance=ExtResource("5_qrem4")]
 unique_name_in_owner = true
 layout_mode = 1
 
-[node name="ColorRectFader" type="ColorRect" parent="."]
+[node name="ColorRectFader" type="ColorRect" parent="." unique_id=1129922567]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
