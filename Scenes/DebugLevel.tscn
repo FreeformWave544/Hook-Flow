@@ -440,7 +440,7 @@ transform = Transform3D(1, 0, 1.74845e-07, 0, 1, 0, -1.74845e-07, 0, 1, 10.5442,
 
 [node name="Portal" parent="." unique_id=1172282364 instance=ExtResource("19_rhstb")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10.0679, 1.5, 21.8964)
-next_level = "res://Levels/TestLevel.tscn"
+next_level = "uid://bgm8slgh3fcj5"
 
 [node name="PortalLabel" type="Label3D" parent="Portal" unique_id=902534610]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65833, 1.61009)
