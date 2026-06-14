@@ -127,6 +127,10 @@ release={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_8="Rope"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b7nyxacglos44" path="res://Player/SmoothCamera.gd" id="2_e12si"]
 [ext_resource type="AudioStream" uid="uid://c4prdjc6y4kw2" path="res://GDTVAssetPack/Audio/jump.ogg" id="3_wfp7i"]
 [ext_resource type="AudioStream" uid="uid://ds5ewrd6b3tip" path="res://GDTVAssetPack/Audio/tap.ogg" id="4_0mhnh"]
+[ext_resource type="PackedScene" uid="uid://birbexa1o7hka" path="res://Player/rope.tscn" id="5_8g4oa"]
 
 [sub_resource type="Animation" id="Animation_i4k0q"]
 resource_name = "Idle"
@@ -175,9 +176,9 @@ material = SubResource("StandardMaterial3D_vlcne")
 radial_segments = 16
 rings = 8
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t7spk"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8g4oa"]
 radius = 0.45
-height = 1.85
+height = 1.9
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_v6a6g"]
 
@@ -226,7 +227,6 @@ size = Vector3(0.1, 0.1, 0.01)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ysni"]
 render_priority = 1
 transparency = 1
-no_depth_test = true
 shading_mode = 0
 albedo_color = Color(0.30980393, 0, 0, 1)
 grow = true
@@ -255,6 +255,9 @@ radius = 0.1
 height = 0.2
 radial_segments = 4
 rings = 1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8g4oa"]
+radius = 0.1
 
 [node name="Player" type="CharacterBody3D" unique_id=532502944 groups=["Player"]]
 floor_max_angle = 0.872665
@@ -291,7 +294,7 @@ process_material = SubResource("ParticleProcessMaterial_wnt7s")
 draw_pass_1 = SubResource("SphereMesh_v6snp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=801098150]
-shape = SubResource("CapsuleShape3D_t7spk")
+shape = SubResource("CapsuleShape3D_8g4oa")
 
 [node name="CameraTarget" type="Node3D" parent="." unique_id=2412687]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.57, 0)
@@ -313,6 +316,10 @@ unique_name_in_owner = true
 
 [node name="HookCast" type="RayCast3D" parent="SmoothCamera" unique_id=1871503805]
 target_position = Vector3(0, 0, -10)
+
+[node name="Rope" parent="SmoothCamera" unique_id=738457895 instance=ExtResource("5_8g4oa")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5, -0.6)
+visible = false
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1852701404]
 root_node = NodePath("../BasePivot")
@@ -345,10 +352,15 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.2,
 material_override = SubResource("StandardMaterial3D_ddoul")
 mesh = SubResource("PrismMesh_ddoul")
 
-[node name="HookIndicator" type="Node3D" parent="." unique_id=213266400]
+[node name="HookIndicator" type="StaticBody3D" parent="." unique_id=1965478327]
 visible = false
+collision_layer = 128
+collision_mask = 128
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HookIndicator" unique_id=1315283944]
 mesh = SubResource("SphereMesh_6ysni")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HookIndicator" unique_id=1017190127]
+shape = SubResource("SphereShape3D_8g4oa")
 
 [connection signal="timeout" from="Audio/FootstepTimer" to="." method="_on_footstep_timer_timeout"]

@@ -88,15 +88,25 @@ func _physics_process(delta: float) -> void:
 
 	if $SmoothCamera/HookCast.is_colliding():
 		if Input.is_action_just_pressed("click"):
+			$SmoothCamera/Rope.show()
+			$SmoothCamera/Rope.global_position = $SmoothCamera.global_position
+			$SmoothCamera/Rope.global_position.z -= 0.1
+			var pin = $SmoothCamera/Rope.newest_rope.get_child(1).duplicate()
+			$SmoothCamera/Rope.add_child(pin, true)
+			pin.global_position = $SmoothCamera/Rope.newest_rope.global_position
+			pin.global_position.y -= 0.3
+			pin.node_a = $SmoothCamera/Rope.newest_rope.get_path()
+			pin.node_b = $HookIndicator.get_path()
+			print($SmoothCamera/Rope.newest_rope.get_child(1).node_b)
 			hook_pos = $SmoothCamera/HookCast.get_collision_point()
 			hook_len = global_position.distance_to(hook_pos)
 			swinging = true
 		UserInterface.hide_can_hook(false)
 	else: UserInterface.hide_can_hook(true)
 
-	if Input.is_action_pressed("reel_in"): hook_len -= reel_speed * delta
+	if Input.is_action_pressed("reel_in") and hook_len >= 1.0: hook_len -= reel_speed * delta
 	if Input.is_action_pressed("reel_out"): hook_len += reel_speed * delta
-	if Input.is_action_just_pressed("release"): swinging = false ; hook_pos = Vector3.ZERO
+	if Input.is_action_just_pressed("release"): swinging = false ; hook_pos = Vector3.ZERO ; $SmoothCamera/Rope.hide()
 	var direction = get_movement_direction()
 
 	if swinging:

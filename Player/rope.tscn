@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://birbexa1o7hka"]
+
+[ext_resource type="Script" uid="uid://ey4ll4j2pq78" path="res://Player/rope.gd" id="1_2pfw4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8m1ff"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8m1ff"]
+height = 0.3
+radius = 0.015
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8m1ff"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8m1ff"]
+radius = 0.01
+
+[node name="Rope" type="StaticBody3D" unique_id=2124603556]
+top_level = true
+collision_layer = 128
+collision_mask = 128
+script = ExtResource("1_2pfw4")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1452310473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+collision_layer = 128
+collision_mask = 128
+physics_material_override = SubResource("PhysicsMaterial_8m1ff")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=74330075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("CylinderShape3D_8m1ff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/CollisionShape3D" unique_id=1844555590]
+mesh = SubResource("CylinderMesh_8m1ff")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="RigidBody3D" unique_id=591479984]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+node_a = NodePath("../..")
+node_b = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1989573999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_8m1ff")
